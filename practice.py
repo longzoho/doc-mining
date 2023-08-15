@@ -9,6 +9,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import Chroma
+from langchain.document_loaders import PDFMinerLoader
 
 
 def read_file(file_path: str) -> str:
@@ -25,6 +26,16 @@ max_ctx_size = 2048
 model_id = "TheBloke/Llama-2-7B-Chat-GGML"
 model_basename = "llama-2-7b-chat.ggmlv3.q4_0.bin"
 hf_hub_download(repo_id=model_id, filename=model_basename)
+
+
+def load_document():
+    # load document
+    loader = PDFMinerLoader(file_path='./resource-test/bb5dd3ac3401ef5cc8aa67b4e27a3c7f.pdf')
+    document = loader.load()[0]
+    doc_json = document.json()
+    # save document as json file
+    with open('./resource-test/bb5dd3ac3401ef5cc8aa67b4e27a3c7f.pdf.json', 'w') as f:
+        f.write(doc_json)
 
 
 def embedding_transformer():
@@ -104,5 +115,6 @@ def query_document():
 
 # main function
 if __name__ == "__main__":
-    embedding_transformer()
-    query_document()
+    load_document()
+    # embedding_transformer()
+    # query_document()
