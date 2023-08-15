@@ -34,7 +34,9 @@ graph TD
 > input parameters: profile_id, query
 ```mermaid
 graph TD
-   A[Load chromaDB from profile_id] --> B[Query chromaDB]
+   A[Create retriever from chromaDB] --> C[Create retrieval question-answer]
+   B[Create prompt] --> C
+   C --> D[Return result]
 ```
 ## Reference
 - [LocalGPT] [https://github.com/PromtEngineer/localGPT
