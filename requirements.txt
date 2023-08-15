@@ -1,0 +1,7 @@
+# Large language model
+langchain==0.0.264
+torch==2.0.1
+chromadb==0.4.5
+llama-cpp-python==0.1.74
+sentence_transformers==2.2.2
+InstructorEmbedding==1.0.1
