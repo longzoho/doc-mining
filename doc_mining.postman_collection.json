@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "aab7fe39-cd15-4554-b88d-ceb2e1d09e4e",
+		"name": "Mining Doc Local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5264546"
+	},
+	"item": [
+		{
+			"name": "Add document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var files = pm.environment.get(\"files\");",
+							"var newFile = jsonData.files;",
+							"console.log(typeof files)",
+							"if (newFile){",
+							"    files = files.length ? Array.from(new Set(files.concat(newFile))) : Array.from(new Set(newFile));",
+							"}",
+							"str_files = '['+files.map(file => '\"'+file+'\"').join(',')+']';",
+							"pm.environment.set(\"files\", files);",
+							"pm.environment.set(\"str_files\", str_files);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": [
+								"/home/longhb/Downloads/6354720070e3c-advances-in-quantitative-analysis-of-finance-and-accounting-advances-in-quantitative-analysis-of-finance.pdf",
+								"/home/longhb/Downloads/63546d16c9e75-the-basics-of-finance.pdf"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/profile/{{profile_id}}/upload-docs",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"profile",
+						"{{profile_id}}",
+						"upload-docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Embedding Documents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/profile/{{profile_id}}/embedding",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"profile",
+						"{{profile_id}}",
+						"embedding"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"query\": \"What is variant\"}  ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/profile/{{profile_id}}/query",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"profile",
+						"{{profile_id}}",
+						"query"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
