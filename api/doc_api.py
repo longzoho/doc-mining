@@ -11,6 +11,7 @@ from util.crypto_util import hash_content
 from util.file_util import save_file, file_exists
 from util.path_util import content_path, bucket
 from workflow.embed_flow import embed_flow
+from workflow.query_flow import query_flow
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +48,10 @@ def embedding(profile_id: str):
 
 @api_error_handler
 def query(profile_id: str):
-    return {'message': 'query'}, 200
+    if request.json.get('query') is not None:
+        result = query_flow(profile_id=profile_id, query=request.json.get('query'))
+        return {'result': result}, 200
+    return {'message': 'No query found'}, 400
 
 
 def read_file(file: FileStorage) -> (bytes, str):

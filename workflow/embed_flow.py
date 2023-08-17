@@ -72,7 +72,7 @@ def split_chunks(file_paths: list[str]) -> list[Document]:
 
 
 @task
-def embed_chunk(chunks: list[Document]) -> str:
+def embed_chunk(profile_id: str, chunks: list[Document]) -> str:
     # concat all chunks to one list
     # embedd document into chroma db
     embeddings = HuggingFaceInstructEmbeddings(
@@ -84,7 +84,7 @@ def embed_chunk(chunks: list[Document]) -> str:
     db = Chroma.from_documents(
         chunks,
         embeddings,
-        persist_directory=get_file_path_by_key(bucket=bucket(), file_key=embeddingdb_path()))
+        persist_directory=get_file_path_by_key(bucket=bucket(), file_key=f'{embeddingdb_path()}/{profile_id}'))
     db.persist()
     return True
 
@@ -95,4 +95,4 @@ def embed_flow(profile_id: str):
     file_paths = convert_to_document.map(file=files, profile_id=profile_id)
     file_paths = remove_none(data=file_paths)
     chunks = split_chunks(file_paths=file_paths)
-    return embed_chunk(chunks=chunks)
+    return embed_chunk(profile_id=profile_id, chunks=chunks)

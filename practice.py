@@ -115,6 +115,6 @@ def query_document():
 
 # main function
 if __name__ == "__main__":
-    load_document()
+    # load_document()
     # embedding_transformer()
-    # query_document()
+    query_document()
