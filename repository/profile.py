@@ -24,6 +24,18 @@ class Profile:
                 {'files': [file_obj for file_obj in file_objs if file_obj.file_hash not in file_hash_list]},
                 profile_query.profile_id == self.profile_id)
 
+    def update_file_status(self, file_hash: str, file_status: str):
+        profile_query = Query()
+        profile = self.table.search(profile_query.profile_id == self.profile_id)
+        if profile:
+            profile_files = profile[0]['files']
+            for file in profile_files:
+                if file['file_hash'] == file_hash:
+                    file['file_status'] = file_status
+            self.table.upsert({'files': profile_files}, profile_query.profile_id == self.profile_id)
+        else:
+            raise Exception(f'Profile {self.profile_id} not found')
+
     def get_profile(self):
         profile_query = Query()
         profile = self.table.search(profile_query.profile_id == self.profile_id)

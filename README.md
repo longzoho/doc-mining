@@ -23,11 +23,9 @@ graph TD
 > input parameters: profile_id
 ```mermaid
 graph TD
-   A[Get list of profile files] --> B[Loader text content]
-   B --> C[Filter out failure files]  
-   C --> D[Save text Document]
-   D --> E[Split text content to chunks] 
-   E --> F[Embedding chunks to ChromaDB]
+   A[Get list of profile files] --> B[Convert to Document]
+   B --> C[Split text content to chunks] 
+   C --> F[Embedding chunks to ChromaDB]
 ```
 
 ## Workflow query document

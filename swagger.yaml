@@ -45,18 +45,6 @@ paths:
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                files:
-                  type: array
-                  items:
-                    type: string
-                profile_id:
-                  type: string
       responses:
         '200':
           description: Document mined
@@ -80,8 +68,6 @@ paths:
             schema:
               type: object
               properties:
-                profile_id:
-                  type: string
                 query:
                   type: string
       responses:

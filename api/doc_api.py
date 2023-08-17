@@ -10,6 +10,7 @@ from repository.profile import Profile
 from util.crypto_util import hash_content
 from util.file_util import save_file, file_exists
 from util.path_util import content_path, bucket
+from workflow.embed_flow import embed_flow
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +41,7 @@ def upload_docs(profile_id: str):
 
 @api_error_handler
 def embedding(profile_id: str):
+    embed_flow(profile_id=profile_id)
     return {'message': 'embedding'}, 200
 
 
