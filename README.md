@@ -32,9 +32,10 @@ graph TD
 > input parameters: profile_id, query
 ```mermaid
 graph TD
-   A[Create retriever from chromaDB] --> C[Create retrieval question-answer]
-   B[Create prompt] --> C
-   C --> D[Return result]
+   A[Create retriever from chromaDB] --> D[Create retrieval question-answer]
+   B[Create prompt] --> D
+   C[Create large language model] --> D
+   D --> E[Return result]
 ```
 ## Reference
 - [LocalGPT] [https://github.com/PromtEngineer/localGPT
