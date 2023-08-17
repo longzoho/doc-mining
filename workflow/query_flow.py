@@ -13,7 +13,7 @@ from util.path_util import embeddingdb_path, bucket
 
 device_type = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-max_ctx_size = 2048
+max_ctx_size = 2048*4
 model_id = "TheBloke/Llama-2-7B-Chat-GGML"
 model_basename = "llama-2-7b-chat.ggmlv3.q4_0.bin"
 
@@ -85,10 +85,10 @@ def query_document(retrieval_qa: RetrievalQA, query: str):
 
 @flow
 def query_flow(profile_id: str, query: str):
-    llm = create_lager_language_model()
-    retriever = create_retriever(profile_id=profile_id)
-    prompt = create_prompt_template()
-    retrieval_qa = create_retriever_qa(llm=llm, retriever=retriever, prompt=prompt)
+    llm = create_lager_language_model.submit()
+    retriever = create_retriever.submit(profile_id=profile_id)
+    prompt = create_prompt_template.submit()
+    retrieval_qa = create_retriever_qa.submit(llm=llm, retriever=retriever, prompt=prompt)
     result = query_document(retrieval_qa=retrieval_qa, query=query)
     dict_result = {
         "result": result.get("result"),
