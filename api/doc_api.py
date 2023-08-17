@@ -1,15 +1,15 @@
-import hashlib
 import logging
 import os
+
 from flask import request
 from werkzeug.datastructures import FileStorage
 
 from api.api_error_handler import api_error_handler
-
-from helper.file_helper import save_file, file_exists
-from helper.path_config import content_path, bucket
-from repository.profile import Profile
 from data_types import FileObj, FileStatus
+from repository.profile import Profile
+from util.crypto_util import hash_content
+from util.file_util import save_file, file_exists
+from util.path_util import content_path, bucket
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ def upload_docs(profile_id: str):
         for file in files:
             file_data, file_name = read_file(file)
             file_extension = os.path.splitext(file_name)[1]
-            file_hash = hashlib.md5(file_data).hexdigest()
+            file_hash = hash_content(file_data)
             if file_data is not None:
                 file_key = f'{content_path()}/{file_hash}{file_extension}'
                 if not file_exists(bucket=bucket(), file_key=file_key):
