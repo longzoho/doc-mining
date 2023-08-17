@@ -5,3 +5,15 @@ chromadb==0.4.5
 llama-cpp-python==0.1.74
 sentence_transformers==2.2.2
 InstructorEmbedding==1.0.1
+
+# Document loader
+pdfminer.six==20221105
+
+# api
+connexion==2.14.2
+python-dotenv==1.0.0
+bson==0.5.10
+flask==2.2.5
+werkzeug==2.2.3
+prefect==2.11.3
+tinydb==4.8.0

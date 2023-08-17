@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: Doc mining API
+  version: 1.0.0
+paths:
+  /api/profile/{profile_id}/upload-docs:
+    description: Upload a document
+    post:
+      summary: Upload a document
+      operationId: api.doc_api.upload_docs
+      parameters:
+        - name: profile_id
+          in: path
+          description: Profile ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              example:
+                documents: [ document1.pdf, document2.txt ]
+      responses:
+        '200':
+          description: Document uploaded
+        '500':
+          description: Internal server error
+  /api/profile/{profile_id}/embedding:
+    description: Mine a document
+    post:
+      summary: Mine a document
+      operationId: api.doc_api.embedding
+      parameters:
+        - name: profile_id
+          in: path
+          description: Profile ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                profile_id:
+                  type: string
+      responses:
+        '200':
+          description: Document mined
+        '500':
+          description: Internal server error
+  /api/profile/{profile_id}/query:
+    description: Mine a document
+    post:
+      summary: Mine a document
+      operationId: api.doc_api.query
+      parameters:
+        - name: profile_id
+          in: path
+          description: Profile ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile_id:
+                  type: string
+                query:
+                  type: string
+      responses:
+        '200':
+          description: Question answered
+        '500':
+          description: Internal server error
